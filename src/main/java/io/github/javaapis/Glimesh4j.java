@@ -28,6 +28,10 @@ public class Glimesh4j {
 
     public Channel getChannel(String username) {
         JSONObject response = client.buildRequest("channel", "username: \"" + username + "\"", RequestBuilder.channelRequest, getApiKey());
-        return new Channel(response.getJSONObject("data").getJSONObject("channel"));
+        return new Channel(response.getJSONObject("data").getJSONObject("channel"), this);
+    }
+
+    public RequestClient getRequestClient() {
+        return client;
     }
 }

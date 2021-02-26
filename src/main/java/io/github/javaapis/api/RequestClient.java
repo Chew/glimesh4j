@@ -23,6 +23,10 @@ public class RequestClient {
         client = new OkHttpClient();
     }
 
+    public OkHttpClient getHttpClient() {
+        return client;
+    }
+
     public JSONObject buildRequest(String name, String params, String data, String key) {
         String graphBody = new RequestBuilder()
             .setType(name, params)
