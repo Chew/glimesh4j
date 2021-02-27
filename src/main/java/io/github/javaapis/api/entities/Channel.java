@@ -1,16 +1,17 @@
 package io.github.javaapis.api.entities;
 
 import io.github.javaapis.Glimesh4j;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Channel {
     private final JSONObject channelData;
     private final Glimesh4j glimesh4j;
 
-    private List<ChannelBan> bans;
     private Category category;
     private List<ChatMessage> chatMessages;
     private OffsetDateTime insertedAt, updatedAt;
@@ -39,6 +40,19 @@ public class Channel {
      */
     public String getTitle() {
         return channelData.getString("title");
+    }
+
+    /**
+     * Gets a list of the banned people for this channel
+     * @return a list of ChannelBans
+     */
+    public List<ChannelBan> getChannelBans() {
+        JSONArray bansJson = channelData.getJSONArray("bans");
+        List<ChannelBan> bans = new ArrayList<>();
+        for (Object ban : bansJson) {
+            bans.add(new ChannelBan((JSONObject) ban, glimesh4j, this));
+        }
+        return bans;
     }
 
     public String getChatRulesHtml() {
